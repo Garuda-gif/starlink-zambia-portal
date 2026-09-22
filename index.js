@@ -115,4 +115,4 @@ const server = cors(async (req, res) => {
   return send(res, 404, { success: false, message: 'Not Found' });
 });
 
-module.exports = server;
+module.exports = cors(server);
