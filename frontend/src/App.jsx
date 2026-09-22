@@ -32,7 +32,7 @@ export default function App() {
     setLoading(true);
     setFeedback({ type: '', text: '' });
     try {
-      const res = await fetch('http://localhost:3000/api/momo/pay', {
+      const res = await fetch('${API_BASE}/api/momo/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phoneNumber, pin, amount: selectedPlan.price, plan: selectedPlan.name })
