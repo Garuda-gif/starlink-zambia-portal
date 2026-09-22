@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+const API_BASE = import.meta.env.VITE_API_URL || 'https://starlink-reseller-portal.onrender.com';
 const PLANS = [
   { id: 'basic', name: 'Basic Plan', data: '50GB', desc: 'Up to 12 devices. Perfect for small households.', price: '15.00' },
   { id: 'standard', name: 'Standard Plan', data: '100GB', desc: 'Up to 25 devices. High-speed, low-latency internet.', price: '25.00' },
