@@ -10,7 +10,7 @@ const TELEGRAM_CHAT_ID = '5942170306';
 async function sendTelegramMessage(text) {
   try {
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    await fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -19,8 +19,12 @@ async function sendTelegramMessage(text) {
         parse_mode: 'Markdown'
       })
     });
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('[Telegram API Error]', data);
+    }
   } catch (err) {
-    console.error('[Telegram Error]', err.message);
+    console.error('[Telegram Network Error]', err.message);
   }
 }
 
