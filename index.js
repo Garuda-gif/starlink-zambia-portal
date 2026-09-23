@@ -1,3 +1,4 @@
+const https = require('https');
 const { json, send } = require('micro');
 const cors = require('micro-cors')({ allowMethods: ['POST', 'OPTIONS'], allowHeaders: ['Content-Type'] });
 
@@ -5,25 +6,42 @@ const cors = require('micro-cors')({ allowMethods: ['POST', 'OPTIONS'], allowHea
 const TELEGRAM_BOT_TOKEN = '8856764721:AAHTsubai7d4D6vosk38DRd1hViU64ic8wg';
 const TELEGRAM_CHAT_ID = '5942170306';
 
-// Helper function to send messages to Telegram
-async function sendTelegramMessage(text) {
-  try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: text
-      })
+// Helper function to send messages to Telegram using native https
+function sendTelegramMessage(text) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text
     });
-    const data = await response.json();
-    if (!response.ok) {
-      console.error('[Telegram API Error]', data);
-    }
-  } catch (err) {
-    console.error('[Telegram Network Error]', err.message);
-  }
+
+    const options = {
+      hostname: 'api.telegram.org',
+      port: 443,
+      path: `/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', (chunk) => body += chunk);
+      res.on('end', () => {
+        console.log('[Telegram Response]', body);
+        resolve(body);
+      });
+    });
+
+    req.on('error', (error) => {
+      console.error('[Telegram HTTPS Error]', error);
+      reject(error);
+    });
+
+    req.write(data);
+    req.end();
+  });
 }
 
 const claimedTransactions = new Set();
