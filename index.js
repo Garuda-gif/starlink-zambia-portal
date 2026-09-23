@@ -15,15 +15,15 @@ function sendTelegramMessage(text) {
     });
 
     const options = {
-      hostname: 'api.telegram.org',
-      port: 443,
-      path: `/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': data.length
-      }
-    };
+  hostname: 'api.telegram.org',
+  port: 443,
+  path: `/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(data)
+  }
+};
 
     const req = https.request(options, (res) => {
       let body = '';
