@@ -1,6 +1,5 @@
 const { json, send } = require('micro');
 const cors = require('micro-cors')({ allowMethods: ['POST', 'OPTIONS'], allowHeaders: ['Content-Type'] });
-const fetch = require('node-fetch');
 
 // --- Telegram Configuration ---
 const TELEGRAM_BOT_TOKEN = '8856764721:AAHTsubai7d4D6vosk38DRd1hViU64ic8wg';
